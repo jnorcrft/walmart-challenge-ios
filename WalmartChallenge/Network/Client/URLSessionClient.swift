@@ -1,6 +1,6 @@
 import Foundation
 
-final class URLSessionClient: NetworkRequestable {
+actor URLSessionClient: NetworkRequestable {
   private let session: URLSessionable
   private let codableHelper: CodableHelper
 
@@ -12,19 +12,19 @@ final class URLSessionClient: NetworkRequestable {
     self.codableHelper = codableHelper
   }
 
-  func request<Result: Decodable>(
+  func request<Result: Decodable & Sendable>(
     urlString: String,
     httpMethod: HTTPMethod = .get,
     timeoutInterval: TimeInterval = 8
-  ) async throws -> Result {
+  ) async throws(NetworkClientError) -> Result {
+    guard let url = URL(string: urlString) else {
+      throw NetworkClientError.invalidURL(urlString)
+    }
+
+    var urlRequest = URLRequest(url: url, timeoutInterval: timeoutInterval)
+    urlRequest.httpMethod = httpMethod.rawValue
+
     do {
-      guard let url = URL(string: urlString) else {
-        throw NetworkClientError.invalidURL(urlString)
-      }
-
-      var urlRequest = URLRequest(url: url, timeoutInterval: timeoutInterval)
-      urlRequest.httpMethod = httpMethod.rawValue
-
       let (data, response) = try await session.data(for: urlRequest)
 
       guard
@@ -36,10 +36,10 @@ final class URLSessionClient: NetworkRequestable {
       }
 
       return try codableHelper.decodeNetworkObject(from: data)
-    } catch let error where !(error is NetworkClientError) {
-      throw NetworkClientError.client(error)
-    } catch {
+    } catch let error as NetworkClientError {
       throw error
+    } catch {
+      throw NetworkClientError.client(error)
     }
   }
 }

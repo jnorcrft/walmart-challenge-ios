@@ -2,7 +2,7 @@ import XCTest
 @testable import WalmartChallenge
 
 class URLSessionClientTests: XCTestCase {
-  private var sut: URLSessionClient!
+  private var sut: NetworkRequestable!
   private var session: MockURLSession!
 
   override func setUp() {
@@ -18,7 +18,7 @@ class URLSessionClientTests: XCTestCase {
   }
 
   func test_client_requestSucceeds() async {
-    session.responseObject = ["id": 0]
+    session.jsonFileName = "GET_NetworkClient_200"
     let urlString = "https://validurl.com"
     do {
       let request: DummyModel = try await sut.request(urlString: urlString)
@@ -31,10 +31,7 @@ class URLSessionClientTests: XCTestCase {
 
   func test_client_requestFailure_serverErrorWithHTTPStatusCode400() async {
     session.givenStatusCode = 400
-    session.responseObject = [
-      "httpStatusCode": 400,
-      "message": "Bad Request"
-    ]
+    session.jsonFileName = "GET_NetworkClient_400"
 
     let exp = expectation(description: #function)
     let urlString = "https://validurl.com/foo/bar"
@@ -54,10 +51,7 @@ class URLSessionClientTests: XCTestCase {
 
   func test_client_requestFailure_serverErrorWithPlaceholder() async throws {
     session.givenStatusCode = 400
-    session.responseObject = [
-      "httpStatusCode": 400,
-      "message": 400
-    ]
+    session.jsonFileName = "GET_NetworkClient_Humanized_400"
 
     let exp = expectation(description: #function)
     let urlString = "https://validurl.com/foo/bar"
@@ -95,7 +89,7 @@ class URLSessionClientTests: XCTestCase {
   }
 
   func test_client_requestFailure_clientWithDecodingError() async {
-    session.responseObject = ["foo": "bar"]
+    session.jsonFileName = "Decoding_Error"
     let exp = expectation(description: #function)
     let urlString = "https://validurl.com/foo/bar"
 

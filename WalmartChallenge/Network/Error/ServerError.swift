@@ -1,4 +1,4 @@
-struct ServerError: Decodable {
+struct ServerError: Error & Decodable, Sendable {
   let httpStatusCode: Int
   let message: String
   let humanizedError: HumanizedError?
@@ -12,11 +12,6 @@ struct ServerError: Decodable {
   static let placeholder: Self = .init(
     httpStatusCode: HTTPStatusCode.badRequest.rawValue,
     message: "Bad Request",
-    humanizedError: .init(
-      title: "Tu conexión a Internet no responde",
-      message: "Para continuar, revisa tu conexión e intentalo de nuevo",
-      primaryButtonTitle: "Reintentar",
-      presentationStyle: "fullscreen"
-    )
+    humanizedError: .placeholder
   )
 }

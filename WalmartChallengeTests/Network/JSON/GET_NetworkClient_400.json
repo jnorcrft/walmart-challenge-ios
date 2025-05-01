@@ -1,0 +1,10 @@
+{
+  "status": 400
+  "message": "Bad Request"
+  "humanized_error": {
+    "title": "Tu conexión a Internet no responde"
+    "message": "Para continuar, revisa tu conexión e intentalo de nuevo"
+    "button_label": "Reintentar"
+    "component": "fullscreen"
+  }
+}

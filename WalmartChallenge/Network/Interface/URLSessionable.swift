@@ -1,7 +1,7 @@
 import Foundation
 
-protocol URLSessionable: AnyObject {
-  func data(for request: URLRequest) async throws -> (Data, URLResponse)
+protocol URLSessionable: AnyObject, Sendable {
+  nonisolated func data(for request: URLRequest) async throws -> (Data, URLResponse)
 }
 
 
