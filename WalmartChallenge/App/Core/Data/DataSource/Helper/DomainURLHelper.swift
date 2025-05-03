@@ -1,4 +1,4 @@
-struct DomainURLHelper<Endpoint: Sendable> {
+struct DomainURLHelper<Endpoint: EndpointProviding> {
   private let baseURL: String
 
   init(baseURL: String = "https://fakestoreapi.com") {
@@ -6,6 +6,6 @@ struct DomainURLHelper<Endpoint: Sendable> {
   }
 
   func makeURL(for endpoint: Endpoint) -> String {
-    baseURL + "\(endpoint)"
+    baseURL + "\(endpoint.endpoint)"
   }
 }
