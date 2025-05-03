@@ -20,8 +20,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchProductsSucceeds() async {
-    session.givenStatusCode = 200
-    session.jsonFileName = "GET_FetchProducts_200"
+    session.statusCodeToReturn = 200
+    session.jsonToReturn = "GET_FetchProducts_200"
     let exp = expectation(description: #function)
     do {
       let response: [ProductDTO] = try await sut.fetchProducts()
@@ -34,8 +34,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchProductsThrows() async {
-    session.givenStatusCode = 400
-    session.jsonFileName = "GET_NetworkClient_Humanized_400"
+    session.statusCodeToReturn = 400
+    session.jsonToReturn = "GET_NetworkClient_Humanized_400"
     let exp = expectation(description: #function)
     do {
       let _: [ProductDTO] = try await sut.fetchProducts()
@@ -51,8 +51,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchCategoriesSucceeds() async {
-    session.givenStatusCode = 200
-    session.jsonFileName = "GET_FetchCategories_200"
+    session.statusCodeToReturn = 200
+    session.jsonToReturn = "GET_FetchCategories_200"
     let exp = expectation(description: #function)
     do {
       let response: [String] = try await sut.fetchCategories()
@@ -65,8 +65,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchCategoriesThrows() async {
-    session.givenStatusCode = 400
-    session.jsonFileName = "GET_NetworkClient_Humanized_400"
+    session.statusCodeToReturn = 400
+    session.jsonToReturn = "GET_NetworkClient_Humanized_400"
     let exp = expectation(description: #function)
     do {
       let _: [String] = try await sut.fetchCategories()
@@ -82,8 +82,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchCategoryProductsSucceeds() async {
-    session.givenStatusCode = 200
-    session.jsonFileName = "GET_FetchProducts_200"
+    session.statusCodeToReturn = 200
+    session.jsonToReturn = "GET_FetchProducts_200"
     let exp = expectation(description: #function)
     do {
       let response: [ProductDTO] = try await sut.fetchCategoryProducts(from: "foo")
@@ -96,8 +96,8 @@ final class LandingRemoteDataSourceTests: XCTestCase {
   }
 
   func test_remoteDataSource_fetchCategoryProductsThrows() async {
-    session.givenStatusCode = 400
-    session.jsonFileName = "GET_NetworkClient_Humanized_400"
+    session.statusCodeToReturn = 400
+    session.jsonToReturn = "GET_NetworkClient_Humanized_400"
     let exp = expectation(description: #function)
     do {
       let _: [ProductDTO] = try await sut.fetchCategoryProducts(from: "foo")

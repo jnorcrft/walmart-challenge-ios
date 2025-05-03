@@ -17,6 +17,24 @@ actor URLSessionClient: NetworkRequestable {
     httpMethod: HTTPMethod = .get,
     timeoutInterval: TimeInterval = 8
   ) async throws(NetworkClientError) -> Result {
+    let data = try await request(
+      urlString: urlString,
+      httpMethod: httpMethod,
+      timeoutInterval: timeoutInterval
+    )
+
+    do {
+      return try codableHelper.decodeNetworkObject(from: data)
+    } catch {
+      throw NetworkClientError.client(error)
+    }
+  }
+
+  func request(
+    urlString: String,
+    httpMethod: HTTPMethod = .get,
+    timeoutInterval: TimeInterval = 8
+  ) async throws(NetworkClientError) -> Data {
     guard let url = URL(string: urlString) else {
       throw NetworkClientError.invalidURL(urlString)
     }
@@ -35,7 +53,7 @@ actor URLSessionClient: NetworkRequestable {
         throw NetworkClientError.server(error ?? .placeholder)
       }
 
-      return try codableHelper.decodeNetworkObject(from: data)
+      return data
     } catch let error as NetworkClientError {
       throw error
     } catch {
