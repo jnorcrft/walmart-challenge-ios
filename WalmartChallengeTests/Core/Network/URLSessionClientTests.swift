@@ -104,6 +104,23 @@ class URLSessionClientTests: XCTestCase {
     }
     await fulfillment(of: [exp], timeout: 8)
   }
+
+  func test_client_requestFailure_clientWithDecodingErrorFromData() async {
+    session.errorToThrow = URLError(.badServerResponse)
+    let exp = expectation(description: #function)
+    let urlString = "https://validurl.com/foo/bar"
+
+    do {
+      let _: Data = try await sut.request(urlString: urlString)
+      XCTFail("Failure expected")
+    } catch NetworkClientError.client(let error) {
+      XCTAssertTrue(error is URLError)
+      exp.fulfill()
+    } catch {
+      XCTFail("NetworkClientError.client expected")
+    }
+    await fulfillment(of: [exp], timeout: 8)
+  }
 }
 
 extension URLSessionClientTests {

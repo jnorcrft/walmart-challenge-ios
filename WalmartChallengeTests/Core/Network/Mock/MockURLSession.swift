@@ -5,9 +5,12 @@ final class MockURLSession: URLSessionable, @unchecked Sendable {
   var jsonToReturn: String?
   var dataToReturn: Data?
   var statusCodeToReturn: Int = 200
+  var errorToThrow: Error?
 
   func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-
+    if let error = errorToThrow {
+      throw error
+    }
     let data = jsonToReturn != nil
       ? try readJSON(jsonToReturn)
       : dataToReturn ?? Data()
