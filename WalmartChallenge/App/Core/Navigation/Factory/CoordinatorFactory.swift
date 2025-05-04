@@ -1,6 +1,9 @@
 import UIKit
 
 struct CoordinatorFactory {
+  private static let networkEnvironment = NetworkEnvironment()
+  private static let serviceEnvironment = ServiceEnvironment(networkEnvironment: networkEnvironment)
+
   enum FeatureCoordinator {
     case landing, cart
   }
@@ -9,7 +12,13 @@ struct CoordinatorFactory {
   static func make(_ coordinator: FeatureCoordinator, with navigationController: UINavigationController) -> Coordinating {
     switch coordinator {
     case .landing:
-      return LandingCoordinator(navigationController: navigationController)
+      return LandingCoordinator(
+        environment: .init(
+          networkEnvironment: networkEnvironment,
+          serviceEnvironment: serviceEnvironment
+        ),
+        navigationController: navigationController
+      )
     case .cart:
       return CartCoordinator(navigationController: navigationController)
     }
