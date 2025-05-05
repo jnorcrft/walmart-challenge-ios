@@ -6,8 +6,10 @@ class CartFooterView: UIView {
   private lazy var containerView: UIView = {
     let view = UIView()
     view.backgroundColor = .white
-    view.layer.cornerRadius = 8
+    view.layer.cornerRadius = 20
     view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    view.layer.borderWidth = 1
+    view.layer.borderColor = UIColor.systemGray4.cgColor
     view.clipsToBounds = true
     view.translatesAutoresizingMaskIntoConstraints = false
     return view
@@ -15,8 +17,9 @@ class CartFooterView: UIView {
 
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.font = .preferredFont(forTextStyle: .headline)
+    label.font = .preferredFont(forTextStyle: .extraLargeTitle2)
     label.numberOfLines = 1
+    label.textAlignment = .center
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
@@ -40,6 +43,8 @@ class CartFooterView: UIView {
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
+
+  private var currentAction: UIAction?
 
   // MARK: - Initializer & Private Methods
 
@@ -96,9 +101,15 @@ class CartFooterView: UIView {
     action: UIAction? = nil
   ) {
     titleLabel.text = title
+    actionButton.setTitle(buttonTitle, for: .normal)
+
+    if let oldAction = currentAction {
+      actionButton.removeAction(oldAction, for: .primaryActionTriggered)
+    }
+
     if let action = action {
-      actionButton.setTitle(buttonTitle, for: .normal)
       actionButton.addAction(action, for: .primaryActionTriggered)
+      currentAction = action
     }
   }
 }

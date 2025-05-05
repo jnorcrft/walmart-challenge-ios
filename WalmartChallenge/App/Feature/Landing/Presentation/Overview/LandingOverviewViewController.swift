@@ -67,11 +67,7 @@ final class LandingOverviewViewController: UIViewController {
       }
       .store(in: &cancellables)
   }
-}
 
-// MARK: - View Methods
-
-extension LandingOverviewViewController: LandingOverviewViewProtocol {
   func handleStateChange(_ state: LandingOverviewViewModel.State) {
     switch state {
     case .loading:
@@ -91,7 +87,11 @@ extension LandingOverviewViewController: LandingOverviewViewProtocol {
       })
     }
   }
+}
 
+// MARK: - View Methods
+
+extension LandingOverviewViewController: LandingOverviewViewProtocol {
   func showProductDetail(_ product: LandingProductModel) {
     let data = ProductDetailViewData(
       imageData: product.imageData,

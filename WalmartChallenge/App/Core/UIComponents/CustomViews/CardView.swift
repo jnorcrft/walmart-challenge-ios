@@ -62,7 +62,7 @@ final class CardView: UIView {
     }
     borderLayer.lineWidth = borderWidth
     borderLayer.fillColor = UIColor.clear.cgColor
-    borderLayer.strokeColor = UIColor.lightGray.cgColor
+    borderLayer.strokeColor = UIColor.systemGray4.cgColor
     borderLayer.lineDashPattern = nil
 
     addSubview(contentBackdrop.autolayout())
