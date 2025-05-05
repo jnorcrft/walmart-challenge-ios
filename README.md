@@ -1,22 +1,65 @@
 # Walmart Challenge iOS
+![iOSVersion](https://img.shields.io/badge/iOS-17%2B-aquagreen)
+![SwiftVersion](https://img.shields.io/badge/Swift-6.0-orange)
+![XcodeVersion](https://img.shields.io/badge/Xcode-16.2-blue)
 
 ## Description
+This assessment evaluates capabilities for the Software Engineer position at Walmart. The challenge requires developing a Minimum Viable Product (MVP) for a small e-commerce platform that must fulfill the following core requirements:
+- View products
+- Browse categories
+- Access product details and ratings
+- Add products to shopping cart
+- Remove products from shopping cart
+- View total payment amount
+
+This exercise aims to evaluate my coding skills by building a basic e-commerce app with essential shopping features.
+
 Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+## Vision
+The vision for this development aims to project: Sufficient functionality to serve as an MVP, but with the appropriate foundations to scale if necessary.
+Here is a list of design decisions for this system:
+- Clean architecture (separation of concerns, enabling flexibility and quick iteration based on business needs).
+- MVVM-C architecture (ViewModels remain unaffected when migrating to SwiftUI).
+- Protocol-oriented programming to favor composition over inheritance.
+- Implementation of multiple design patterns (Coordinator, DataSource, Repository, Factory, Observer, Adapter, Dependency Injection, and Composition Root) to support project modularization.
+- Reusable UI components, including extensions to prevent code duplication for behavioral logic.
+- Some A11y implementations.
+- No third party dependencies for core functionality
+- Swift 6 language mode supported.
+- Complete Strict Concurrency Checking supported
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+## Areas for Improvement
+To be honest, I had time constraints to complete this development, and the UI layer shows more polish in some details than others.
+If time had not been an issue, these are the things I would have implemented:
+- Pagination for LandingOverview view.
+- Snackbar kind of UI component for managing cart notifications.
+- Snapshot testing for the views.
+- Table/Collection DataSource & Delegate unit tests.
+- A better implementation for image fetching & caching, using Kingfisher.
+- ScrollView for sheets product description.
+- Constants file per feature for texts, etc.
+- An AppCoordinator as starting point for the composition root instead of TabBarCoordinator.
+- Layout warnings & better file management for UI.
+
+## Assumptions
+- BFF pattern for error and response handling (the app simulates a HumanizedError object on some requests).
+- The App supports English only.
+- No need to use the service for product details, considering all needed data from that service is already fetched from the general or category products service.
+- No UI buttons for the top right of the screen, instead the app supports native behavior from some UI components (some more polished than others).
+- Persistence is managed with just an UserDefaults abtraction.
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+The project only needs to be cloned and run (on simulator or device). Currently, it does not contain any third-party dependencies that need to be downloaded. Please check the badges above to see a better summary of the minimum requirements.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Screenshots
+<p float="left">
+  <img src="WalmartChallenge/Supporting/pic1.png" width="150" alt="pic1">
+  <img src="WalmartChallenge/Supporting/pic2.png" width="150" alt="pic2">
+  <img src="WalmartChallenge/Supporting/pic3.png" width="150" alt="pic3">
+  <img src="WalmartChallenge/Supporting/pic4.png" width="150" alt="pic4">
+  <img src="WalmartChallenge/Supporting/pic5.png" width="150" alt="pic5">
+</p>
 
 ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
+Thank you to the Walmart team for trusting in my abilities, and I hope we can work together.
