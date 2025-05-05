@@ -112,7 +112,9 @@ extension CartSummaryViewController: CartSummaryViewProtocol {
     viewLayout.footerView.configure(
       title: value,
       action: UIAction { _ in
-        print("the end")
+        #if DEBUG
+        print("The End")
+        #endif
       }
     )
   }

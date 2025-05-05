@@ -10,7 +10,7 @@ enum LandingEndpoint: EndpointProviding {
     case .categories:
       "/products/categories"
     case .categoryProducts:
-      "/products/categories/%@"
+      "/products/category/%@"
     }
   }
 }

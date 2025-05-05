@@ -37,7 +37,7 @@ class LandingCoordinatorTests: XCTestCase {
   }
 
   func test_coordinator_presentCategoriesViewSucceeds() {
-    sut.presentLandingCategories()
+    sut.presentLandingCategories(with: ["Jewelery"])
     XCTAssertTrue(navigationController.lastPresentedViewController is LandingCategoriesViewController)
   }
 
@@ -57,5 +57,10 @@ class LandingCoordinatorTests: XCTestCase {
   func test_coordinator_presentAlertViewSucceeds() {
     sut.presentAlert(from: .placeholder, handler: {})
     XCTAssertTrue(navigationController.lastPresentedViewController is UIAlertController)
+  }
+
+  func test_coordinator_didSelectCategoryDelegateSucceeds() {
+    sut.didSelectCategory("Jewelery")
+    XCTAssertTrue(navigationController.topViewController is LandingOverviewViewController)
   }
 }

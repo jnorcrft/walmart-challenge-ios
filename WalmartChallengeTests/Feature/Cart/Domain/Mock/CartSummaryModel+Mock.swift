@@ -1,3 +1,4 @@
+import Foundation
 @testable import WalmartChallenge
 
 extension CartSummaryModel {
@@ -6,6 +7,7 @@ extension CartSummaryModel {
       items: [
         .init(
           id: 0,
+          imageData: Data(),
           title: "title",
           price: 100.0
         )

@@ -33,10 +33,12 @@ final class LandingOverviewViewModel: ObservableObject {
     self.imageFetchingService = imageFetchingService
   }
 
-  func loadProducts() async {
+  func loadProducts(_ withCategory: String? = nil) async {
     state = .loading
     do {
-      let (overview, categories) = try await getLandingOverviewUseCase.execute()
+      let (overview, categories) = try await withCategory == nil
+        ? getLandingOverviewUseCase.execute()
+      : getLandingOverviewUseCase.execute(withCategory: withCategory?.lowercased() ?? "")
 
       var updatedFeaturedProduct = overview.featuredProduct
       updatedFeaturedProduct.imageData = try await self.imageFetchingService.fetchImage(from: overview.featuredProduct.imageURL)
@@ -60,7 +62,7 @@ final class LandingOverviewViewModel: ObservableObject {
       let finalModel = LandingOverviewModel(
         featuredProduct: updatedFeaturedProduct,
         products: updatedProducts,
-        categories: categories
+        categories: categories.map { $0.capitalized }
       )
 
       state = .loaded(model: finalModel)

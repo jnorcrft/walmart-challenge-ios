@@ -58,6 +58,13 @@ class LandingOverviewViewModelTests: XCTestCase {
     XCTAssertTrue(ladingRepository.didCallFetchCategories)
   }
 
+  func test_viewModel_loadProductsByCategorySucceeds() async throws {
+    await sut.loadProducts("Jewelery")
+    XCTAssertEqual(sut.cartCount, .zero)
+    XCTAssertTrue(ladingRepository.didCallFetchProductsByCatgory)
+    XCTAssertTrue(ladingRepository.didCallFetchCategories)
+  }
+
   func test_viewModel_loadProductsThrowsHumanizedError() async throws {
     ladingRepository.didSuccess = false
     await sut.loadProducts()

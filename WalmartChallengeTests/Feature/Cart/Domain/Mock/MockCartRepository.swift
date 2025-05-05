@@ -11,7 +11,12 @@ final class MockCartRepository: CartRepositoryProviding, @unchecked Sendable {
 
   func fetchCart() async throws -> CartSummaryModel {
     didCallFetchCart = true
-    return .mock
+    if didSuccess {
+      return .mock
+    } else {
+      throw EncodingError.invalidValue(1, .init(codingPath: [], debugDescription: ""))
+    }
+
   }
   
   func saveCartItem(_ item: ProductDTO) async throws {

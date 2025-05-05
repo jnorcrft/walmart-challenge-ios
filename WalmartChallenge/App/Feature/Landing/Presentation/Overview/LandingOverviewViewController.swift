@@ -113,4 +113,14 @@ extension LandingOverviewViewController: LandingOverviewViewProtocol {
       await viewModel.addToCart(product)
     }
   }
+
+  func didSelectCategory(_ category: String) {
+    Task {
+      if category == "All" {
+        await viewModel.loadProducts()
+      } else {
+        await viewModel.loadProducts(category)
+      }
+    }
+  }
 }

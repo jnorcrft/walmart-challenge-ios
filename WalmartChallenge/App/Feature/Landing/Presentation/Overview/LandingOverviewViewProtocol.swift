@@ -4,4 +4,5 @@ protocol LandingOverviewViewProtocol: AnyObject {
 
   func showProductDetail(_ product: LandingProductModel)
   func addToCart(_ product: LandingProductModel)
+  func didSelectCategory(_ category: String)
 }

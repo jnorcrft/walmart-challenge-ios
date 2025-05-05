@@ -114,11 +114,16 @@ final class ProductDetailView: UIView, SheetPresentable {
     imageView.image = UIImage(data: viewData.imageData ?? Data())
     titleLabel.text = viewData.title
     bodyLabel.text = viewData.body
+
     ratingView.setRating(viewData.rating)
+    ratingView.accessibilityLabel = "rating of \(viewData.rating)"
+
     button.addAction(.init(handler: { [weak self] action in
       self?.viewData?.handler.performWithSender(action.sender, target: nil)
       self?.dismissClosure?()
     }), for: .touchUpInside)
+
+
   }
 
   func setDismissalClosure(_ closure: @escaping () -> Void) {

@@ -12,9 +12,9 @@ struct HumanizedError: Error & Decodable, Sendable {
   }
 
   static let placeholder: Self = .init(
-    title: "Tu conexión a Internet no responde",
-    message: "Para continuar, revisa tu conexión e intentalo de nuevo",
-    primaryButtonTitle: "Reintentar",
+    title: "Your Internet connection is not responding",
+    message: "To continue, check your connection and try again",
+    primaryButtonTitle: "Retry",
     presentationStyle: "fullscreen"
   )
 }

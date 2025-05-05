@@ -55,6 +55,10 @@ final class CartSummaryLayout {
       right: .zero
     )
     tableView.scrollIndicatorInsets = tableView.contentInset
+    tableView.tableHeaderView = TableHeaderView(
+      frame: .init(x: .zero, y: .zero, width: view.frame.width, height: 60),
+      text: "Cart"
+    ).autolayout()
     view.bringSubviewToFront(footerView)
   }
 

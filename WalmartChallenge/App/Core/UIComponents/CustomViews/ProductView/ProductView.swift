@@ -50,7 +50,7 @@ final class ProductView: UIView {
   private let button: UIButton = {
     let button = UIButton(type: .system)
     var configuration = UIButton.Configuration.plain()
-    configuration.image = UIImage(systemName: "plus.circle.fill")
+    configuration.image = UIImage(systemName: "plus.circle")
     configuration.baseForegroundColor = .systemBlue
     configuration.contentInsets = .zero
     button.configuration = configuration

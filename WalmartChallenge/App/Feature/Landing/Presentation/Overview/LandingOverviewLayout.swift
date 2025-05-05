@@ -55,7 +55,9 @@ final class LandingOverviewLayout {
     imageView.contentMode = .scaleAspectFit
 
     let buttonAction = UIAction { [weak self] _ in
-      self?.viewController?.coordinator?.presentLandingCategories()
+      if let viewController = viewController as? LandingOverviewViewController {
+        self?.viewController?.coordinator?.presentLandingCategories(with: viewController.model?.categories ?? [])
+      }
     }
 
     let button = UIBarButtonItem(
