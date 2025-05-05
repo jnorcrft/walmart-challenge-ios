@@ -1,5 +1,6 @@
 @MainActor
-protocol CartCoordinating {
+protocol CartCoordinating: AnyObject, AlertPresenting {
   func routeToCartSummary()
-  func updateCart()
+  func showEmptyState()
+  func updateCart(_ count: Int)
 }

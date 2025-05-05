@@ -22,13 +22,23 @@ final class CartEnvironment {
     ProductDTOToCartItemModelMapper()
   }
 
-//  func makeProductToOverviewMapper() -> LandingProductToOverviewModelMapper {
-//    LandingProductToOverviewModelMapper()
-//  }
-
   // MARK: - UseCase
 
-//  func makeGetLandingOverviewUseCase() -> GetLandingOverviewUseCase {
-//    GetLandingOverviewUseCase(repository: makeRepository())
-//  }
+  func makeGetCartProductsUseCase() -> GetCartProductsUseCase {
+    GetCartProductsUseCase(repository: makeRepository())
+  }
+
+  func makeManageCartProductsUseCase() -> ManageCartProductsUseCase {
+    ManageCartProductsUseCase(repository: makeRepository())
+  }
+
+  // MARK: - ViewModel
+
+  @MainActor
+  func makeCartSummaryViewModel() -> CartSummaryViewModel {
+    CartSummaryViewModel(
+      getCartProductsUseCase: makeGetCartProductsUseCase(),
+      manageCartProductUseCase: makeManageCartProductsUseCase()
+    )
+  }
 }

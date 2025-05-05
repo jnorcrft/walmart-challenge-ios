@@ -56,7 +56,7 @@ final class ProductView: UIView {
     button.configuration = configuration
     button.contentHorizontalAlignment = .trailing
     button.isAccessibilityElement = true
-    button.accessibilityLabel = "Agregar al carro"
+    button.accessibilityLabel = "Add to cart"
     button.translatesAutoresizingMaskIntoConstraints = false
     return button
   }()
@@ -93,6 +93,8 @@ final class ProductView: UIView {
     label.setContentCompressionResistancePriority(.required, for: .vertical)
     return label
   }()
+
+  private var imageConstraints: [NSLayoutConstraint] = []
 
   private var isVerticalLayout: Bool = false
 
@@ -142,12 +144,7 @@ final class ProductView: UIView {
 extension ProductView {
   private func commonInit() {
     addSubview(cardView.autolayout())
-    var constraints: [NSLayoutConstraint] = cardView.constraints(anchoredTo: self)
-    constraints.append(contentsOf: [
-      imageView.widthAnchor.constraint(equalToConstant: 80),
-      imageView.heightAnchor.constraint(equalToConstant: 80),
-    ])
-    NSLayoutConstraint.activate(constraints)
+    NSLayoutConstraint.activate(cardView.constraints(anchoredTo: self))
 
     layoutStackVertically()
   }
@@ -157,6 +154,12 @@ extension ProductView {
     cardView.contentStack.alignment = .center
 
     cleanSubviews()
+    NSLayoutConstraint.deactivate(imageConstraints)
+    imageConstraints = [
+      imageView.widthAnchor.constraint(equalToConstant: 80),
+      imageView.heightAnchor.constraint(equalToConstant: 80),
+    ]
+    NSLayoutConstraint.activate(imageConstraints)
 
     [subtitleLabel, button].forEach {
       bottomContentStack.addArrangedSubview($0)
@@ -171,9 +174,15 @@ extension ProductView {
 
   private func layoutStackHorizontally() {
     cardView.contentStack.axis = .horizontal
-    cardView.contentStack.alignment = .center
+    cardView.contentStack.alignment = .top
 
     cleanSubviews()
+    NSLayoutConstraint.deactivate(imageConstraints)
+    imageConstraints = [
+      imageView.widthAnchor.constraint(equalToConstant: 150),
+      imageView.heightAnchor.constraint(equalToConstant: 150),
+    ]
+    NSLayoutConstraint.activate(imageConstraints)
 
     bottomContentStack.addArrangedSubview(button)
 

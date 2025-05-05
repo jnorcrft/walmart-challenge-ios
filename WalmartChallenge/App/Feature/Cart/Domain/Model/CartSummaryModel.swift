@@ -7,7 +7,7 @@ struct CartSummaryModel: Sendable {
     let amount: Decimal = items.reduce(Decimal.zero) { accumulator, item in
       accumulator + (item.price * Decimal(item.quantity))
     }
-    return CurrencyFormatter.formatToCLP(amount)
+    return "Total amount: \(CurrencyFormatter.formatToCLP(amount))"
   }
 
   var itemCount: Int {

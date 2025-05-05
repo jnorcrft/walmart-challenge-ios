@@ -3,12 +3,13 @@ import UIKit
 
 struct CartItemModel: Codable & Sendable {
   let id: Int
+  let imageData: Data?
   let title: String
   let price: Decimal
   private(set) var quantity: Int
 
   private enum CodingKeys: String, CodingKey {
-    case id, title, price, quantity
+    case id, imageData, title, price, quantity
   }
 
   var image: UIImage?
@@ -20,12 +21,14 @@ struct CartItemModel: Codable & Sendable {
 
   init(
     id: Int,
+    imageData: Data?,
     title: String,
     price: Decimal,
     quantity: Int = 1,
     image: UIImage? = nil
   ) {
     self.id = id
+    self.imageData = imageData
     self.title = title
     self.price = price
     self.quantity = max(1, quantity)

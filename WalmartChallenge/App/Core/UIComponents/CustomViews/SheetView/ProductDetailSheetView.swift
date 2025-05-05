@@ -83,7 +83,7 @@ final class ProductDetailView: UIView, SheetPresentable {
     button.configuration = configuration
     button.contentHorizontalAlignment = .trailing
     button.isAccessibilityElement = true
-    button.accessibilityLabel = "Agregar al carro"
+    button.accessibilityLabel = "Add to cart"
     return button
   }()
 

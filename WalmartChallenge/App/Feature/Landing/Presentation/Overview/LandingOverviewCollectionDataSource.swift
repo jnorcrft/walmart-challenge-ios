@@ -37,7 +37,7 @@ extension LandingOverviewCollectionDataSource {
       cell.configure(.init(image: model.featuredProduct.imageData,
                            title: model.featuredProduct.title,
                            subtitle: model.featuredProduct.price,
-                           headline: "Destacado",
+                           headline: "Featured",
                            handler: .init(
                             handler: { [weak self] _ in
                               self?.view?.addToCart(model.featuredProduct)

@@ -3,7 +3,6 @@ import Foundation
 actor CartRepository: CartRepositoryProviding {
   private let localDataSource: StoragePersisting
   private let dtoToCartItemMapper: ProductDTOToCartItemModelMapper
-  private var cachedCartSummary: CartSummaryModel?
 
   init(
     localDataSource: StoragePersisting,
@@ -18,12 +17,8 @@ actor CartRepository: CartRepositoryProviding {
   }
 
   func fetchCart() async throws -> CartSummaryModel {
-    if let cachedCartSummary {
-      return cachedCartSummary
-    }
     let items: [CartItemModel] = try localDataSource.retrieve(forKey: StorageKeys.cartItems) ?? []
     let currentCart = CartSummaryModel(items: items)
-    self.cachedCartSummary = currentCart
     return currentCart
   }
 
@@ -76,7 +71,6 @@ actor CartRepository: CartRepositoryProviding {
   }
 
   func clearCart() async throws {
-    self.cachedCartSummary = nil
     localDataSource.remove(forKey: StorageKeys.cartItems)
   }
 }
@@ -85,6 +79,5 @@ extension CartRepository {
   private func updateCart(with items: [CartItemModel]) throws {
     let updatedCart = CartSummaryModel(items: items)
     try localDataSource.save(updatedCart.items, forKey: StorageKeys.cartItems)
-    self.cachedCartSummary = updatedCart
   }
 }

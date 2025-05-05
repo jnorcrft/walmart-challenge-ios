@@ -15,23 +15,28 @@ final class CartCoordinator: Coordinating {
 
   func start() {
     routeToCartSummary()
-    updateCart()
   }
 }
 
 extension CartCoordinator: CartCoordinating {
+  func showEmptyState() {
+    var config = UIContentUnavailableConfiguration.empty()
+    config.image = UIImage(systemName: "cart")
+    config.text = "Your Cart is Empty"
+    config.secondaryText = "Items you add to your cart will appear here"
+    navigationController.contentUnavailableConfiguration = config
+  }
+  
   func routeToCartSummary() {
-    let viewController = CartSummaryViewController()
+    let viewController = CartSummaryViewController(
+      viewModel: environment.makeCartSummaryViewModel(),
+      coordinator: self
+    )
     viewController.view.backgroundColor = .white
     navigationController.pushViewController(viewController, animated: true)
   }
 
-  func updateCart() {
-    let repository = environment.makeRepository()
-    Task {
-      try await repository.clearCart()
-      let cartCount = try await repository.fetchCart().itemCount
-      cartCountDelegate?.updateCartCount(cartCount)
-    }
+  func updateCart(_ count: Int) {
+    cartCountDelegate?.updateCartCount(count)
   }
 }
