@@ -41,7 +41,7 @@ final class CartRepositoryTests: XCTestCase {
       let response: CartSummaryModel = try await sut.fetchCart()
       exp.fulfill()
       XCTAssertFalse(response.items.isEmpty)
-      XCTAssertEqual(response.items.first?.totalPrice, 109.95)
+      XCTAssertEqual(response.items.first?.totalPrice, "$110 CLP")
       XCTAssertEqual(response.totalPrice, "$110 CLP")
     } catch {
       XCTFail("Success is expected")

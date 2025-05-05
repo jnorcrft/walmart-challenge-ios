@@ -1,17 +1,24 @@
 @testable import WalmartChallenge
 
 final class MockCartRepository: CartRepositoryProviding, @unchecked Sendable {
+  var didCallFetchCart = false
   var didCallSaveCartItem = false
   var didCallUpdateCartItemQuantity = false
   var didCallRemoveCartItem = false
   var didCallClearCart = false
 
+  var didSuccess = true
+
   func fetchCart() async throws -> CartSummaryModel {
-    .mock
+    didCallFetchCart = true
+    return .mock
   }
   
   func saveCartItem(_ item: ProductDTO) async throws {
     didCallSaveCartItem = true
+    if !didSuccess {
+      throw EncodingError.invalidValue(1, .init(codingPath: [], debugDescription: ""))
+    }
   }
   
   func updateCartItemQuantity(itemID: Int, increment: Bool) async throws {

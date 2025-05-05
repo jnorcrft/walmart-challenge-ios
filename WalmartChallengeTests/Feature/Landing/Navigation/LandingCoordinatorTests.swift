@@ -53,4 +53,9 @@ class LandingCoordinatorTests: XCTestCase {
     sut.presentSheet(with: data)
     XCTAssertTrue(navigationController.lastPresentedViewController is SheetViewController)
   }
+
+  func test_coordinator_presentAlertViewSucceeds() {
+    sut.presentAlert(from: .placeholder, handler: {})
+    XCTAssertTrue(navigationController.lastPresentedViewController is UIAlertController)
+  }
 }

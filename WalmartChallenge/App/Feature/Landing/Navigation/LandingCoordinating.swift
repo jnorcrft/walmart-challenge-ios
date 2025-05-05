@@ -1,5 +1,5 @@
 @MainActor
-protocol LandingCoordinating: AnyObject, SheetPresenting {
+protocol LandingCoordinating: AnyObject, SheetPresenting, AlertPresenting {
   func routeToLandingOverview()
   func presentLandingCategories()
   func presentSheet(with details: ProductDetailViewData)
