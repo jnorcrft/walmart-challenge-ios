@@ -13,8 +13,9 @@ struct CartItemModel: Codable & Sendable {
 
   var image: UIImage?
 
-  var totalPrice: Decimal {
-    price * Decimal(quantity)
+  var totalPrice: String {
+    let amount = price * Decimal(quantity)
+    return CurrencyFormatter.formatToCLP(amount)
   }
 
   init(
