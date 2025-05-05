@@ -2,6 +2,6 @@
 protocol LandingCoordinating: AnyObject, SheetPresenting, AlertPresenting {
   func routeToLandingOverview()
   func presentLandingCategories()
-  func presentSheet(with details: ProductDetailViewData)
+  func presentSheet(with data: some SheetDataComposable)
   func updateCartCount(_ count: Int)
 }

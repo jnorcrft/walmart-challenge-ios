@@ -15,7 +15,7 @@ struct ProductDTOToLandingProductModelMapper {
   }
 
   func reverseMap(value: LandingProductModel) -> ProductDTO {
-    .init(
+    var result = ProductDTO(
       id: value.id,
       title: value.title,
       price: CurrencyFormatter.formatCLPBackToDecimal(value.price) ?? .zero,
@@ -24,5 +24,7 @@ struct ProductDTOToLandingProductModelMapper {
       imageURL: value.imageURL,
       rating: .init(rate: value.rate, count: value.rateCount)
     )
+    result.imageData = value.imageData
+    return result
   }
 }

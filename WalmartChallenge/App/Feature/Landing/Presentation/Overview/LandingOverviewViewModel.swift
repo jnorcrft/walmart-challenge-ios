@@ -2,6 +2,8 @@ import Foundation
 
 @MainActor
 final class LandingOverviewViewModel: ObservableObject {
+  // MARK: - Overview State
+
   enum State {
     case loading
     case loaded(model: LandingOverviewModel)
@@ -13,8 +15,6 @@ final class LandingOverviewViewModel: ObservableObject {
   private let getLandingOverviewUseCase: GetLandingOverviewUseCase
   private let addProductToCartUseCase: AddProductToCartUseCase
   private let imageFetchingService: ImageFetching
-
-  private weak var coordinator: LandingCoordinating?
 
   // MARK: - Observed Properties
 

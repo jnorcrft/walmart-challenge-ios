@@ -6,21 +6,18 @@ struct ProductViewData {
   let subtitle: String
   let headline: String
   let handler: UIAction
-  let index: Int
 
   init(
     image: Data?,
     title: String,
     subtitle: String,
     headline: String = "",
-    handler: UIAction,
-    index: Int = .zero
+    handler: UIAction
   ) {
     self.image = image
     self.title = title
     self.subtitle = subtitle
     self.headline = headline
     self.handler = handler
-    self.index = index
   }
 }

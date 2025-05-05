@@ -39,9 +39,9 @@ extension LandingOverviewCollectionDataSource {
                            subtitle: model.featuredProduct.price,
                            headline: "Destacado",
                            handler: .init(
-                            handler: { [weak self] _ in  self?.view?.addToCart(model.featuredProduct)
-                            }),
-                           index: 0
+                            handler: { [weak self] _ in
+                              self?.view?.addToCart(model.featuredProduct)
+                            })
                           )
                      )
     } else {
@@ -50,8 +50,8 @@ extension LandingOverviewCollectionDataSource {
                            subtitle: model.products[indexPath.row].price,
                            handler: .init(
                             handler: { [weak self] _ in
-                              self?.view?.addToCart(model.featuredProduct)
-                            }), index: 0
+                              self?.view?.addToCart(model.products[indexPath.row])
+                            })
                           )
                      )
     }

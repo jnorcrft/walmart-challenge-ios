@@ -9,6 +9,8 @@ struct ProductDTO: Decodable & Sendable, Identifiable {
   let imageURL: String
   let rating: ProductRatingDTO
 
+  var imageData: Data?
+
   private enum CodingKeys: String, CodingKey {
     case id, title, price, description, category
     case imageURL = "image"
