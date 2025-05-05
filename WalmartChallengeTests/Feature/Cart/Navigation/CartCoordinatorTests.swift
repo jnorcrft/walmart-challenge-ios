@@ -9,7 +9,12 @@ class CartCoordinatorTests: XCTestCase {
   override func setUp() {
     super.setUp()
     navigationController = .init()
-    sut = CartCoordinator(navigationController: navigationController)
+    sut = CartCoordinator(
+      navigationController: navigationController,
+      environment: .init(
+        storageEnvironment: .init()
+      )
+    )
     sut.start()
   }
 

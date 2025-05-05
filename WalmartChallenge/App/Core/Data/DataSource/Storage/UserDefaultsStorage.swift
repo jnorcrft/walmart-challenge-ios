@@ -5,7 +5,7 @@ struct UserDefaultsStorage: StoragePersisting {
   private let codableHelper: CodableHelper
 
   init(
-    userDefaults: UserDefaults,
+    userDefaults: UserDefaults = .standard,
     codableHelper: CodableHelper = .init()
   ) {
     self.userDefaults = userDefaults

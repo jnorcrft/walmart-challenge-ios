@@ -10,10 +10,10 @@ struct CartSummaryModel: Sendable {
     return CurrencyFormatter.formatToCLP(amount)
   }
 
-  var itemCount: String {
+  var itemCount: Int {
     let count: Int = items.reduce(.zero) { accumulator, item in
       accumulator + item.quantity
     }
-    return String(count)
+    return count
   }
 }

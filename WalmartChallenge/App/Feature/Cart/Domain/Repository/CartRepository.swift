@@ -2,15 +2,15 @@ import Foundation
 
 actor CartRepository: CartRepositoryProviding {
   private let localDataSource: StoragePersisting
-  private let productMapper: ProductDTOToCartItemModelMapper
+  private let dtoToCartItemMapper: ProductDTOToCartItemModelMapper
   private var cachedCartSummary: CartSummaryModel?
 
   init(
     localDataSource: StoragePersisting,
-    productMapper: ProductDTOToCartItemModelMapper
+    dtoToCartItemMapper: ProductDTOToCartItemModelMapper
   ) {
     self.localDataSource = localDataSource
-    self.productMapper = productMapper
+    self.dtoToCartItemMapper = dtoToCartItemMapper
   }
 
   private enum StorageKeys {
@@ -30,7 +30,7 @@ actor CartRepository: CartRepositoryProviding {
   func saveCartItem(_ item: ProductDTO) async throws {
     var currentItems: [CartItemModel] = try await fetchCart().items
 
-    let cartItem = productMapper.map(value: item)
+    let cartItem = dtoToCartItemMapper.map(value: item)
 
     if let index = currentItems.firstIndex(where: { $0.id == item.id }) {
       var existingItem = currentItems[index]

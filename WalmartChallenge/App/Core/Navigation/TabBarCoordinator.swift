@@ -5,6 +5,8 @@ final class TabBarCoordinator {
   private let window: UIWindow
   private(set) var tabBarController: UITabBarController
   private(set) var childCoordinators: [Coordinating] = []
+  private var cartCountHelper: CartCountHelper?
+
 
   init(window: UIWindow) {
     self.window = window
@@ -45,6 +47,17 @@ extension TabBarCoordinator {
 
     childCoordinators.forEach { $0.start() }
     tabBarController.viewControllers = childCoordinators.map { $0.navigationController }
+
+    cartCountHelper = .init(tabBarController: tabBarController)
+
+    if let landingCoordinator = landingCoordinator as? LandingCoordinator? {
+      landingCoordinator?.cartCountDelegate = cartCountHelper
+    }
+
+    if let cartCoordinator = cartCoordinator as? CartCoordinator? {
+      cartCoordinator?.cartCountDelegate = cartCountHelper
+    }
+
     window.rootViewController = tabBarController
     window.makeKeyAndVisible()
   }

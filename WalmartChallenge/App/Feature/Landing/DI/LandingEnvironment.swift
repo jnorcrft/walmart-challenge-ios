@@ -3,13 +3,17 @@ final class LandingEnvironment {
 
   private let networkEnvironment: NetworkEnvironment
   private let serviceEnvironment: ServiceEnvironment
+  private let cartEnvironment: CartEnvironment
+
 
   init(
     networkEnvironment: NetworkEnvironment,
-    serviceEnvironment: ServiceEnvironment
+    serviceEnvironment: ServiceEnvironment,
+    cartEnvironment: CartEnvironment
   ) {
     self.networkEnvironment = networkEnvironment
     self.serviceEnvironment = serviceEnvironment
+    self.cartEnvironment = cartEnvironment
   }
 
   // MARK: - Data
@@ -18,7 +22,7 @@ final class LandingEnvironment {
     LandingRemoteDatasource(client: networkEnvironment.makeNetworkClient())
   }
 
-  func makeRepository() -> some LandingRepository {
+  func makeRepository() -> LandingRepositoryProviding {
     LandingRepository(
       remoteDataSource: makeRemoteDataSource(),
       dtoToProductMapper: makeDtoToProductMapper(),
@@ -42,12 +46,20 @@ final class LandingEnvironment {
     GetLandingOverviewUseCase(repository: makeRepository())
   }
 
+  func makeAddProductToCartUseCase() -> AddProductToCartUseCase {
+    AddProductToCartUseCase(
+      repository: cartEnvironment.makeRepository(),
+      mapper: makeDtoToProductMapper()
+    )
+  }
+
   // MARK: - ViewModel
 
   @MainActor
   func makeOverviewViewModel() -> LandingOverviewViewModel {
     LandingOverviewViewModel(
-      useCase: makeGetLandingOverviewUseCase(),
+      getLandingOverviewUseCase: makeGetLandingOverviewUseCase(),
+      addProductToCartUseCase: makeAddProductToCartUseCase(),
       imageFetchingService: serviceEnvironment.makeImageFetchingService()
     )
   }

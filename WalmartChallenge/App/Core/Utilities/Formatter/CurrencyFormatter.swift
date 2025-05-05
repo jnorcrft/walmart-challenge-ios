@@ -11,4 +11,12 @@ struct CurrencyFormatter {
   static func formatToCLP(_ amount: Decimal) -> String {
     "\(clpFormatter.string(from: amount as NSDecimalNumber)!) CLP"
   }
+
+  static func formatCLPBackToDecimal(_ amountString: String) -> Decimal? {
+    let cleanString = amountString.replacingOccurrences(of: " CLP", with: "")
+    if let number = clpFormatter.number(from: cleanString) {
+      return number.decimalValue
+    }
+    return nil
+  }
 }

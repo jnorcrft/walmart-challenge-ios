@@ -8,8 +8,21 @@ class LandingCoordinatorTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
+    let networkEnvironment = NetworkEnvironment()
+    let environment = LandingEnvironment(
+      networkEnvironment: networkEnvironment,
+      serviceEnvironment: .init(
+        networkEnvironment: networkEnvironment
+      ),
+      cartEnvironment: .init(
+        storageEnvironment: .init()
+      )
+    )
     navigationController = .init()
-    sut = LandingCoordinator(navigationController: navigationController)
+    sut = LandingCoordinator(
+      environment: environment,
+      navigationController: navigationController
+    )
     sut.start()
   }
 
@@ -26,5 +39,18 @@ class LandingCoordinatorTests: XCTestCase {
   func test_coordinator_presentCategoriesViewSucceeds() {
     sut.presentLandingCategories()
     XCTAssertTrue(navigationController.lastPresentedViewController is LandingCategoriesViewController)
+  }
+
+  func test_coordinator_presentSheetViewSucceeds() {
+    let data = ProductDetailViewData(
+      imageData: nil,
+      title: "",
+      body: "",
+      price: "",
+      rating: .zero,
+      handler: .init(handler: { _ in })
+    )
+    sut.presentSheet(with: data)
+    XCTAssertTrue(navigationController.lastPresentedViewController is SheetViewController)
   }
 }

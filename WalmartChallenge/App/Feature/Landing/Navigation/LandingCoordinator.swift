@@ -1,9 +1,15 @@
 import UIKit
 
 final class LandingCoordinator: Coordinating {
+  private let environment: LandingEnvironment
   let navigationController: UINavigationController
+  weak var cartCountDelegate: CartCountUpdatingDelegate?
 
-  init(navigationController: UINavigationController) {
+  init(
+    environment: LandingEnvironment,
+    navigationController: UINavigationController
+  ) {
+    self.environment = environment
     self.navigationController = navigationController
   }
 
@@ -14,38 +20,33 @@ final class LandingCoordinator: Coordinating {
 
 extension LandingCoordinator: LandingCoordinating {
   func routeToLandingOverview() {
-    let viewController = LandingOverviewViewController()
+    let viewController = LandingOverviewViewController(
+      viewModel: environment.makeOverviewViewModel(),
+      coordinator: self
+    )
+
     viewController.view.backgroundColor = .white
-    configureNavBarAppearance(for: viewController)
     navigationController.pushViewController(viewController, animated: true)
   }
 
   func presentLandingCategories() {
     let viewController = LandingCategoriesViewController()
+
     viewController.view.backgroundColor = .white
     viewController.isModalInPresentation = true
     viewController.modalPresentationStyle = .currentContext
     navigationController.present(viewController, animated: false)
   }
-}
 
-extension LandingCoordinator {
-  private func configureNavBarAppearance(for viewController: UIViewController) {
-    let imageConfiguration = UIImage.SymbolConfiguration(scale: .large)
-    let imageView = UIImageView(image: .init(systemName: "storefront.fill", withConfiguration: imageConfiguration))
-    imageView.contentMode = .scaleAspectFit
-
-    let buttonAction = UIAction { [weak self] _ in
-      self?.presentLandingCategories()
+  func presentSheet(with data: some SheetDataComposable) {
+    if let data = data as? ProductDetailViewData {
+      let sheetView = ProductDetailView()
+      sheetView.configure(data)
+      presentSheet(sheetView)
     }
+  }
 
-    let button = UIBarButtonItem(
-      image: .init(systemName: "ellipsis.circle", withConfiguration: imageConfiguration),
-      primaryAction: buttonAction
-    )
-
-    viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
-    viewController.navigationItem.rightBarButtonItem = button
-
+  func updateCartCount(_ count: Int) {
+    cartCountDelegate?.updateCartCount(count)
   }
 }

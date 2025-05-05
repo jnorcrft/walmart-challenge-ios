@@ -10,7 +10,7 @@ final class CartRepositoryTests: XCTestCase {
     localDataSource = .init()
     sut = CartRepository(
       localDataSource: localDataSource,
-      productMapper: .init()
+      dtoToCartItemMapper: .init()
     )
   }
 
@@ -58,7 +58,7 @@ final class CartRepositoryTests: XCTestCase {
       let response: CartSummaryModel = try await sut.fetchCart()
       exp.fulfill()
       XCTAssertFalse(response.items.isEmpty)
-      XCTAssertEqual(response.itemCount, "2")
+      XCTAssertEqual(response.itemCount, 2)
     } catch {
       XCTFail("Success is expected")
     }
@@ -87,7 +87,7 @@ final class CartRepositoryTests: XCTestCase {
       let response: CartSummaryModel = try await sut.fetchCart()
       exp.fulfill()
       XCTAssertTrue(response.items.isEmpty)
-      XCTAssertEqual(response.itemCount, "0")
+      XCTAssertEqual(response.itemCount, .zero)
     } catch {
       XCTFail("Success is expected")
     }
@@ -105,7 +105,7 @@ final class CartRepositoryTests: XCTestCase {
       let response: CartSummaryModel = try await sut.fetchCart()
       exp.fulfill()
       XCTAssertFalse(response.items.isEmpty)
-      XCTAssertEqual(response.itemCount, "1")
+      XCTAssertEqual(response.itemCount, 1)
     } catch {
       XCTFail("Success is expected")
     }
